@@ -1,0 +1,24 @@
+[danbooru]
+# Danbooru 登录名（可选，不填则匿名访问）
+login = ""
+
+# Danbooru API Key（可选，与 login 配合使用）
+# 在 https://danbooru.donmai.us/profile 页面生成
+api_key = ""
+
+# 搜索结果中允许的最高评级
+# 可选值: "g"（通用）, "s"（敏感）, "q"（可疑）, "e"（明确）
+# 多个值用逗号分隔，例如 "g,s"
+allowed_ratings = "g,s"
+
+# 每次搜索返回的最大帖子数（1-200）
+max_results = 20
+
+# 发送的图片数量（1 = 只发送最匹配的 1 张）
+send_count = 1
+
+# 是否优先发送缩略图（速度更快）而非原图
+use_preview = false
+
+# 图片下载超时时间（秒）
+download_timeout = 15

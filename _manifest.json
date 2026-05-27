@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "id": "com.maibot.danbooru-search",
+  "version": "1.0.0",
+  "name": "Danbooru 图片搜索",
+  "description": "通过 Tag 从 Danbooru 搜索并发送图片",
+  "author": {
+    "name": "MaiBot Plugin Dev",
+    "url": "https://github.com/maibot"
+  },
+  "license": "MIT",
+  "urls": {
+    "repository": "https://github.com/maibot/danbooru-search"
+  },
+  "host_application": {
+    "min_version": "1.0.0",
+    "max_version": "1.99.99"
+  },
+  "sdk": {
+    "min_version": "1.0.0",
+    "max_version": "2.99.99"
+  },
+  "capabilities": ["send_message"],
+  "i18n": {
+    "default_locale": "zh-CN"
+  }
+}
