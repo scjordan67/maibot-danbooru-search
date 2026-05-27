@@ -5,23 +5,14 @@
   "name": "Danbooru 图片搜索",
   "description": "通过 Tag 从 Danbooru 搜索并发送图片",
   "author": {
-    "name": "MaiBot Plugin Dev",
-    "url": "https://github.com/maibot"
+    "name": "scjordan67",
+    "url": "https://github.com/scjordan67"
   },
   "license": "MIT",
   "urls": {
-    "repository": "https://github.com/maibot/danbooru-search"
+    "repository": "https://github.com/scjordan67/maibot-danbooru-search",
+    "homepage": "https://github.com/scjordan67/maibot-danbooru-search",
+    "documentation": "https://github.com/scjordan67/maibot-danbooru-search#readme",
+    "issues": "https://github.com/scjordan67/maibot-danbooru-search/issues"
   },
-  "host_application": {
-    "min_version": "1.0.0",
-    "max_version": "1.99.99"
-  },
-  "sdk": {
-    "min_version": "1.0.0",
-    "max_version": "2.99.99"
-  },
-  "capabilities": ["send_message"],
-  "i18n": {
-    "default_locale": "zh-CN"
-  }
-}
+  
