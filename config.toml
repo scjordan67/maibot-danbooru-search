@@ -1,3 +1,6 @@
+[plugin]
+config_version = "1.0.0"
+
 [danbooru]
 # Danbooru 登录名（可选，不填则匿名访问）
 login = ""
@@ -20,5 +23,4 @@ send_count = 1
 # 是否优先发送缩略图（速度更快）而非原图
 use_preview = false
 
-# 图片下载超时时间（秒）
-download_timeout = 15
+# 图片下载超时时

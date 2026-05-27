@@ -37,8 +37,8 @@ _RATING_MAP = {"g": "通用", "s": "敏感", "q": "可疑", "e": "明确"}
 # ─── 配置模型 ─────────────────────────────────────────────────────────────────
 
 
-class DanbooruConfig(PluginConfigBase):
-    """Danbooru 搜索插件配置"""
+class DanbooruSection(PluginConfigBase):
+    """Danbooru 搜索配置（对应 config.toml 的 [danbooru] 节）"""
 
     __ui_label__ = "Danbooru 搜索设置"
 
@@ -66,13 +66,19 @@ class DanbooruConfig(PluginConfigBase):
     )
 
 
+class DanbooruPluginConfig(PluginConfigBase):
+    """插件根配置（对应 config.toml 整体结构）"""
+
+    danbooru: DanbooruSection = Field(default_factory=DanbooruSection)
+
+
 # ─── 插件主体 ─────────────────────────────────────────────────────────────────
 
 
 class DanbooruSearchPlugin(MaiBotPlugin):
     """通过 Tag 从 Danbooru 搜索并发送图片的 MaiBot 插件。"""
 
-    config_model = DanbooruConfig
+    config_model = DanbooruPluginConfig
 
     # ── 生命周期 ──────────────────────────────────────────────────────────────
 
@@ -125,7 +131,7 @@ class DanbooruSearchPlugin(MaiBotPlugin):
     async def handle_tool_search(
         self, tags: str, stream_id: str, count: int = 1, **kwargs: Any
     ) -> dict:
-        cfg = self.config
+        cfg = self.config.danbooru
         send_n = min(count, cfg.send_count, 10)  # 安全上限 10
 
         posts = await self._fetch_posts(tags, cfg)
@@ -176,7 +182,7 @@ class DanbooruSearchPlugin(MaiBotPlugin):
             )
             return False, "缺少 tags 参数", 1
 
-        cfg = self.config
+        cfg = self.config.danbooru
         posts = await self._fetch_posts(tags, cfg)
         if not posts:
             await self.ctx.send.text(
@@ -202,7 +208,7 @@ class DanbooruSearchPlugin(MaiBotPlugin):
     # ── 内部方法 ──────────────────────────────────────────────────────────────
 
     async def _fetch_posts(
-        self, tags: str, cfg: DanbooruConfig
+        self, tags: str, cfg: DanbooruSection
     ) -> list[dict]:
         """从 Danbooru API 获取帖子列表并按评级过滤。"""
         params: dict[str, Any] = {
@@ -243,7 +249,7 @@ class DanbooruSearchPlugin(MaiBotPlugin):
         return filtered
 
     async def _send_post(
-        self, post: dict, stream_id: str, cfg: DanbooruConfig
+        self, post: dict, stream_id: str, cfg: DanbooruSection
     ) -> bool:
         """下载单张图片并通过 ctx.send.image 发送；返回是否成功。"""
         url = self._pick_image_url(post, cfg.use_preview)
@@ -299,8 +305,4 @@ class DanbooruSearchPlugin(MaiBotPlugin):
             return None
 
 
-# ─── 插件入口 ─────────────────────────────────────────────────────────────────
-
-
-def create_plugin() -> DanbooruSearchPlugin:
-    return DanbooruSearchPlugin()
+# ─── 插件入口 ──────────
