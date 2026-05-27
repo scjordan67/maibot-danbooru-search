@@ -37,6 +37,14 @@ _RATING_MAP = {"g": "通用", "s": "敏感", "q": "可疑", "e": "明确"}
 # ─── 配置模型 ─────────────────────────────────────────────────────────────────
 
 
+class PluginSection(PluginConfigBase):
+    """插件基础配置节（对应 config.toml 的 [plugin]，Runner 用于版本跟踪）"""
+
+    __ui_label__ = "插件基础设置"
+
+    enabled: bool = Field(default=True, description="是否启用插件")
+
+
 class DanbooruSection(PluginConfigBase):
     """Danbooru 搜索配置（对应 config.toml 的 [danbooru] 节）"""
 
@@ -69,6 +77,7 @@ class DanbooruSection(PluginConfigBase):
 class DanbooruPluginConfig(PluginConfigBase):
     """插件根配置（对应 config.toml 整体结构）"""
 
+    plugin: PluginSection = Field(default_factory=PluginSection)
     danbooru: DanbooruSection = Field(default_factory=DanbooruSection)
 
 
@@ -302,7 +311,4 @@ class DanbooruSearchPlugin(MaiBotPlugin):
             return None
         except Exception as exc:
             self.ctx.logger.error("图片下载出错 (url=%s): %s", url, exc, exc_info=True)
-            return None
-
-
-# ─── 插件入口 ──────────
+         
